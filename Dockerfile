@@ -2,10 +2,10 @@ FROM openjdk:8-jdk-alpine
 
 EXPOSE 8080
 
-ARG DEPENDENCY=target/dependency
+ARG DEPENDENCY=target/store-0.0.1-SNAPSHOT.jar
 
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
+WORKDIR /opt/app
+COPY ${DEPENDENCY} app.jar
 
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.hadware.store.SpringApplication"]
+
+ENTRYPOINT ["java","-jar","app.jar"]
