@@ -4,8 +4,10 @@ EXPOSE 8080
 
 ARG DEPENDENCY=target/store-0.0.1-SNAPSHOT.jar
 
-WORKDIR /opt/app
-COPY ${DEPENDENCY} app.jar
+COPY ./target/store-0.0.1-SNAPSHOT.jar usr/app
+WORKDIR usr/app
+RUN sh -c 'touch store-0.0.1-SNAPSHOT.jar'
 
 
-ENTRYPOINT ["java","-jar","app.jar"]
+
+ENTRYPOINT ["java","-jar","store-0.0.1-SNAPSHOT.jar"]
