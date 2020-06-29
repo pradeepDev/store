@@ -1,21 +1,25 @@
-version: "3"
+version: "2.0"
 services:
-store-billing:	
-    image: 
-      store-billing
+  store:
+    image: devrd/dockerexp:store
     ports:
       - "8080:8080"
-    networks:   
+    networks:
       - store-network
+    
     depends_on:
       - mariadb
-    mariadb:
-    image: mariadb:10.3 
-    bind-address : 0.0.0.0 
+ 
+  mariadb:
+    image: mariadb:10.3
+    ports:
+      - "3306:3306"
     networks:
-    - store-network
-    environments:
-    - MYSQL_ROOT_PASSWORD=root
-    - MYSQL_DATABASE=root
+      - store-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=root  
+      - bind-address = 0.0.0.0
+
 networks:
- store-network:
+  store-network:
