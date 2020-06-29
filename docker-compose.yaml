@@ -1,21 +1,21 @@
 version: "3"
 services:
-	cms:
-		image: store-demo
-		ports:
-			- "8080:8080"
-		networks:
-			- store-network
-		depends_on:
-			- mysqldb
-			
-	mysqldb:
-		image: mariadb:10.3
-		bind-address = 0.0.0.0
-		networks:
-			- store-network
-		environments:
-			- MYSQL_ROOT_PASSWORD=root
-			- MYSQL_DATABASE=root
+store-billing:	
+    image: 
+      store-billing
+    ports:
+      - "8080:8080"
+    networks:   
+      - store-network
+    depends_on:
+      - mariadb
+    mariadb:
+    image: mariadb:10.3 
+    bind-address : 0.0.0.0 
+    networks:
+    - store-network
+    environments:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=root
 networks:
-	store-network:
+ store-network:
