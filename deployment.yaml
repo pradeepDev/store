@@ -12,7 +12,7 @@
       targetPort: 8080
     selector:
       io.kompose.service: store
-  
+ --- 
   apiVersion: v1
   kind: Service
   metadata:
