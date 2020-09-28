@@ -88,7 +88,7 @@
           resources: {}
           volumeMounts:
           - mountPath: /var/lib/mariadb
-            name: my-datavolume
+            name: maridb-datavolume
         restartPolicy: Always
         volumes:
         - name: maridb-datavolume
