@@ -86,26 +86,24 @@
           ports:
           - containerPort: 3306
           resources: {}
-          
-        volumes:
-        - name: my-datavolume
-          persistentVolumeClaim:
-            claimName: my-datavolume
-        volumeMounts:
+          volumeMounts:
           - mountPath: /var/lib/mariadb
             name: my-datavolume
         restartPolicy: Always
+        volumes:
+        - name: maridb-datavolume
+          persistentVolumeClaim:
+            claimName: maridb-datavolume
+        
   status: {}
 ---
   apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-      name: my-datavolume
+      name: maridb-datavolume
   spec:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
         storage: 100Mi
-
-
