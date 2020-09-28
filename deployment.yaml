@@ -3,7 +3,7 @@
   metadata:
     labels:
       io.kompose.service: store
-    name: atore
+    name: store
   spec:
     type: LoadBalancer
     ports:
