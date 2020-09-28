@@ -86,28 +86,26 @@
           ports:
           - containerPort: 3306
           resources: {}
-          volumeMounts:
-          - mountPath: /var/lib/mariadb
-            name: my-datavolume
-        restartPolicy: Always
+          
         volumes:
         - name: my-datavolume
           persistentVolumeClaim:
             claimName: my-datavolume
+        volumeMounts:
+          - mountPath: /var/lib/mariadb
+            name: my-datavolume
+        restartPolicy: Always
   status: {}
 ---
   apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-    creationTimestamp: null
-    labels:
-      io.kompose.service: my-datavolume
-    name: my-datavolume
+      name: my-datavolume
   spec:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
         storage: 100Mi
-  status: {}
+
 
