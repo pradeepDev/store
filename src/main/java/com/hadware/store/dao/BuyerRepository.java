@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.hadware.store.model.Buyer;
 import com.hadware.store.model.Cart;
 
-public interface BuyerRepository extends JpaRepository<Buyer, Long> {
+public interface BuyerRepository extends JpaRepository<com.hadware.store.model.Buyer, Long> {
 	@Query(value = "SELECT t FROM Buyer t WHERE ID = ('%'+ :string +'%') ")
 	List<Buyer> find(String string);
     
