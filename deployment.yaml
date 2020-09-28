@@ -5,16 +5,14 @@
       io.kompose.service: store
     name: store
   spec:
-    type: LoadBalancer
+    type: nodeport
     ports:
     - name: "8080"
       port: 8080
       targetPort: 8080
     selector:
       io.kompose.service: store
-  status:
-    loadBalancer: {}
----
+  
   apiVersion: v1
   kind: Service
   metadata:
