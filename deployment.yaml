@@ -5,7 +5,7 @@
       io.kompose.service: store
     name: store
   spec:
-    type: nodePort
+    type: NodePort
     ports:
     - name: "8080"
       port: 8080
