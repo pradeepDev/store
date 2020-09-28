@@ -1,0 +1,115 @@
+  apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      io.kompose.service: store
+    name: atore
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    selector:
+      io.kompose.service: store
+  status:
+    loadBalancer: {}
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      io.kompose.service: mariadb
+    name: mariadb
+  spec:
+    ports:
+    - name: "3306"
+      port: 3306
+      targetPort: 3306
+    selector:
+      io.kompose.service: mariadb
+  status:
+    loadBalancer: {}
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      io.kompose.service: store
+    name: store
+  spec:
+    selector:
+      matchLabels:
+        io.kompose.service: store
+        tier: frontend
+    replicas: 2
+    strategy: {}
+    template:
+      metadata:
+        labels:
+          io.kompose.service: store
+          tier: frontend
+      spec:
+        containers:
+        - image: devrd/store-kubernetes-example
+          name: store
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: mariadb
+  spec:
+    selector:
+      matchLabels:
+        io.kompose.service: mariadb
+        tier: backend
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          io.kompose.service: mariadb
+          tier: backend
+      spec:
+        containers:
+        - env:
+          - name: MYSQL_DATABASE
+            value: root
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          image: mariadb:10.3
+          name: mariadb
+          ports:
+          - containerPort: 3306
+          resources: {}
+          volumeMounts:
+          - mountPath: /var/lib/mariadb
+            name: my-datavolume
+        restartPolicy: Always
+        volumes:
+        - name: my-datavolume
+          persistentVolumeClaim:
+            claimName: my-datavolume
+  status: {}
+---
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: my-datavolume
+    name: my-datavolume
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+
