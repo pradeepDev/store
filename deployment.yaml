@@ -87,7 +87,7 @@
           - containerPort: 3306
           resources: {}
           volumeMounts:
-          - mountPath: /var/lib/mariadb
+          - mountPath: /var/lib/mysql
             name: maridb-datavolume
         restartPolicy: Always
         volumes:
